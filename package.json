@@ -1,0 +1,28 @@
+{
+  "name": "skydotenv",
+  "version": "1.0.0",
+  "description": "> [!WARNING] > Please please run this ONLY in a VM. this is malware lmfao",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/astra-the-boop/skydotenv.git"
+  },
+  "private": true,
+  "dependencies": {
+    "@atproto/api": "^0.18.8",
+    "body-parser": "^2.2.1",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/astra-the-boop/skydotenv/issues"
+  },
+  "homepage": "https://github.com/astra-the-boop/skydotenv#readme"
+}
