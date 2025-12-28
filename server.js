@@ -6,5 +6,10 @@ const agent = new BskyAgent({
 })
 
 await agent.login({
+    identifier: process.env.USERNAME,
+    password: process.env.APP_PASSWORD,
+})
 
+await agent.post({
+    text: "Node.js Hello world"
 })
