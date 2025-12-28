@@ -15,7 +15,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     agent.login(&username, &appPass).await?;
 
     let post = RecordData{
-        created_at: Utc::now().to_rfc3339(),
+        created_at: Some(Utc::now().to_rfc3339()),
         embed: None,
         entities: None,
         facets: None,
