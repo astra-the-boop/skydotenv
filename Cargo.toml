@@ -9,7 +9,7 @@ egui = "0.27"
 walkdir = "2"
 ignore = "0.4"
 bsky-sdk = "0.1"
-atrium-api = "0.1"
+atrium-api = "0.25.7"
 tokio = {version = "1", features = ["full"]}
 dotenv = "0.15"
 chrono = {version = "0.4", features = ["serde"]}

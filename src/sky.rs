@@ -3,7 +3,7 @@ use chrono::Utc;
 use dotenv::dotenv;
 use std::env;
 use std::error::Error;
-use atrium_api::app::bsky::feed::post::Record;
+use atrium_api::app::bsky::feed::post::RecordData;
 
 async fn main() -> Result<(), Box<dyn Error>> {
     dotenv().ok();
@@ -14,7 +14,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     agent.login(&username, &appPass).await?;
 
-    let post = Record{
+    let post = RecordData{
         created_at: Utc::now().to_rfc3339(),
         embed: None,
         entities: None,
