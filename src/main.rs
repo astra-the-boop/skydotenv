@@ -28,12 +28,12 @@ fn scanFiles(root: &str) -> Vec<PathBuf>{
     files
 }
 
-fn mergeFiles(files: &[std::path::PathBuf], output: &Path) -> String{
+fn mergeFiles(files: &[std::path::PathBuf]) -> String{
     let mut output:String = "".to_string();
 
     for path in files{
         if let Ok(content) = std::fs::read_to_string(path){
-            output.push_str(format!("[ {path} ]").as_str());
+            output.push_str(format!("\n[ {} ]\n", path.display()).as_str());
             output.push_str(content.as_str());
         }
     }
@@ -68,7 +68,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     let files = scanFiles("/Users/astra.celestine");
         println!("{:?}", &files);
 
-        mergeFiles(&files, &Path::new("merged.txt")).unwrap();
+        println!("{}", mergeFiles(&files));
 
     Ok(())
 }
