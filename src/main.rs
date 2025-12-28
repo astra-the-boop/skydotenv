@@ -1,5 +1,3 @@
-mod sky;
-
 use bsky_sdk::BskyAgent;
 use ignore::WalkBuilder;
 use std::fs::File;
@@ -30,18 +28,17 @@ fn scanFiles(root: &str) -> Vec<PathBuf>{
     files
 }
 
-fn mergeFiles(files: &[std::path::PathBuf], output: &Path) -> io::Result<()>{
-    let mut output = File::create(output)?;
+fn mergeFiles(files: &[std::path::PathBuf], output: &Path) -> String{
+    let mut output:String = "".to_string();
 
     for path in files{
         if let Ok(content) = std::fs::read_to_string(path){
-            writeln!(output, "[ {} ]", path.display())?;
-            writeln!(output, "{}", content)?;
-            writeln!(output)?;
+            output.push_str(format!("[ {path} ]").as_str());
+            output.push_str(content.as_str());
         }
     }
 
-    Ok(())
+    output
 }
 
 #[tokio::main]
