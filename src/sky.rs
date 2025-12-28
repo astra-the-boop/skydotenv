@@ -1,5 +1,4 @@
 use bsky_sdk::BskyAgent;
-use chrono::Utc;
 use dotenv::dotenv;
 use std::env;
 use std::error::Error;
@@ -24,18 +23,10 @@ async fn main() -> Result<(), Box<dyn Error>> {
         langs: None,
         reply: None,
         tags: None,
-        text: "Hello, world!".to_string(),
+        text: "Hello, world! (again)".to_string(),
     };
 
     agent.create_record(post).await?;
 
     Ok(())
 }
-
-
-// fn main(){
-//     dotenv().ok();
-//
-//     let appPass = env::var("APP_PASS").expect("APP_PASS is not set");
-//     let username = env::var("USERNAME").expect("USERNAME is not set");
-// }
