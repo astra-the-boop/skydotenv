@@ -2,6 +2,7 @@ import time
 import os
 import requests
 import webbrowser
+import sys
 
 
 def searchFiles(root, target):
@@ -85,7 +86,10 @@ def main():
                     webbrowser.open(url)
                     clear()
                     print(f"thanks for that, i guess? you can check out your env files here: {url}")
-    exit()
+    clear()
+    print("Please quit the application")
+    sys.exit(0)
+
 
 
 if __name__ == "__main__":
