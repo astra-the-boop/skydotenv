@@ -3,12 +3,13 @@ import os
 import requests
 import webbrowser
 import sys
+from tqdm import tqdm
 
 
 def searchFiles(root, target):
     matches = []
 
-    for dirpath, dirnames, filenames in os.walk(root):
+    for dirpath, dirnames, filenames in tqdm(os.walk(root), desc="Scanning files...", unit=""):
         if target in filenames:
             matches.append(os.path.join(dirpath, target))
 
@@ -30,7 +31,7 @@ def epsteinFiles(paths):
     res = ""
     data = readFiles(paths)
 
-    for i in data:
+    for i in tqdm(data, desc="Redacting files...", unit="file"):
         res += f"=== [{i}] ===\n"
 
         for j in data[i].splitlines():
