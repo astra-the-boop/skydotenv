@@ -9,7 +9,7 @@ from tqdm import tqdm
 def searchFiles(root, target):
     matches = []
 
-    with tqdm(desc="Scanning files", unit="") as thingy:
+    with tqdm(desc="Scanning files", unit="", dynamic_ncols=True, leave=False, smoothing=0.1, bar_format="{l_bar}{bar}| {n_fmt} [{rate_fmt}] {postfix}") as thingy:
         for dirpath, dirnames, filenames in os.walk(root):
             thingy.set_postfix_str(dirpath, refresh=False)
 
@@ -27,7 +27,7 @@ def readFiles(paths):
         try:
             with open(p, "r", encoding="utf-8", errors="ignore") as f:
                 contents[p] = f.read()
-        except (PermissionError, FileNotFoundError) as e:
+        except (PermissionError, FileNotFoundError):
             continue
 
     return contents
