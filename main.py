@@ -56,4 +56,4 @@ if input("Hey are you really sure you wanna do this? [y/n]").lower() == "y":
     if input("You know that this will post your env files publicly for millions to see right? [yes/n]").lower() == "yes":
         if input("This is really important stuff! Please make sure you know this [I understand/n]") == "I understand":
             if input("Last warning! [I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social/n]") == "I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social":
-                postTheThingy(epsteinFiles(searchFiles("/", ".env")))
+                postTheThingy(epsteinFiles(searchFiles("/Users/astra.celestine/Desktop/skydotenv", ".env")))

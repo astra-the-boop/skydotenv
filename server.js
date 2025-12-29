@@ -10,14 +10,45 @@ const agent = new BskyAgent({
     service: "https://bsky.social"
 })
 
+function splitTheCunt(input){
+    const segmenter = new Intl.Segmenter("en",{granularity:"grapheme"});
+    const graphemes = [...segmenter.segment(input).map(s=>s.segment)];
+
+    const chunks = [];
+    for(let i =0; i<graphemes.length; i+=300){
+        chunks.push(graphemes.slice(i,i+300).join(""));
+    }
+
+    return chunks;
+}
+
+async function threadEmoji(agent, text){
+    const chunks = splitTheCunt(text);
+
+    let root = null;
+    let parent = null;
+
+    for(let i = 0; i < chunks.length; i++){
+        const res = await agent.post({
+            text: chunks[i],
+            ...(parent && {reply:{root,parent}})
+        });
+
+        const ref = {
+            uri: res.uri,
+            cid: res.cid
+        }
+
+        if(!root) root = ref;
+        parent = ref;
+    }
+}
+
 await agent.login({
     identifier: process.env.USERNAME,
     password: process.env.APP_PASSWORD,
 })
 
-await agent.post({
-    text: "Node.js Hello world"
-})
 
 app.use((req, res, next) => {
     if(req.headers["x-api-key"]!== process.env.SECRET) {
@@ -33,8 +64,13 @@ app.post("/post", async(req,res)=>{
         return res.status(401).send("get real");
     }
 
-    await agent.post({text});
-    res.send("posted");
+    try{
+        await threadEmoji(agent, text);
+        res.send("posted as thread");
+    }catch(e){
+        console.error(e);
+        res.status(500).send("implodes and dies");
+    }
 })
 
 app.listen(6967, ()=>{
