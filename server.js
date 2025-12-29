@@ -4,6 +4,7 @@ import express from "express";
 
 
 const app = express();
+app.use(express.json());
 
 const agent = new BskyAgent({
     service: "https://bsky.social"
@@ -27,7 +28,7 @@ app.use((req, res, next) => {
 })
 
 app.post("/post", async(req,res)=>{
-    const {text} = res.body;
+    const {text} = req.body;
     if(!text||typeof text !== "string"){
         return res.status(401).send("get real");
     }
