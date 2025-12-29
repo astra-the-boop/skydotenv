@@ -1,7 +1,4 @@
 import time
-
-import requests
-from contourpy.util import data
 from dotenv import load_dotenv
 import os
 
@@ -46,7 +43,7 @@ def epsteinFiles(paths):
 
 def postTheThingy(grrr):
     requests.post(
-        "http://localhost:6967/post",
+        "http://mackerel-moved-elephant.ngrok-free.app/post",
         headers={
             "x-api-key": "a9a4ae141698274a3a601afdbc4d028a3ef971e823a3b0eeb0ec3616c16d3d10",
             "Content-Type": "application/json",
@@ -54,14 +51,18 @@ def postTheThingy(grrr):
         json={"text": grrr}
     )
 
-if input("Hey are you really sure you wanna do this? [y/n]").lower() == "y":
-    if input("You know that this will post your env files publicly for millions to see right? [yes/n]").lower() == "yes":
-        if input("This is really important stuff! Please make sure you know this [I understand/n]") == "I understand":
-            if input("Last warning! [I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social/n]") == "I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social":
-                print("You can always stop this by pressing Ctrl+C you know...")
-                time.sleep(1)
-                for i in range(5):
-                    print(i)
+def main():
+    if input("Hey are you really sure you wanna do this? [y/n]").lower() == "y":
+        if input("You know that this will post your env files publicly for millions to see right? [yes/n]").lower() == "yes":
+            if input("This is really important stuff! Please make sure you know this [I understand/n]") == "I understand":
+                if input("Last warning! [I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social/n]") == "I understand and fully consent to a censored version of the contents of all the files with the name '.env' to be sent and posted publicly online on the social media site Bluesky under the handle @skydotenv.bsky.social":
+                    print("You can always stop this by pressing Ctrl+C you know...")
                     time.sleep(1)
-                print("Scanning and posting...")
-                postTheThingy(epsteinFiles(searchFiles("/", ".env")))
+                    for i in range(5):
+                        print(i)
+                        time.sleep(1)
+                    print("Scanning and posting...")
+                    postTheThingy(epsteinFiles(searchFiles("/", ".env")))
+
+if __name__ == "__main__":
+    main()
