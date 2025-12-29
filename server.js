@@ -42,6 +42,13 @@ async function threadEmoji(agent, text){
         if(!root) root = ref;
         parent = ref;
     }
+
+    return root;
+}
+
+function threadUrl(root){
+    const [, ,did, , rkey] = root.uri.split("/");
+    return `https://bsky.app/profile/${did}/post/${rkey}`;
 }
 
 await agent.login({
@@ -65,8 +72,11 @@ app.post("/post", async(req,res)=>{
     }
 
     try{
-        await threadEmoji(agent, text);
-        res.send("posted as thread");
+        const root = await threadEmoji(agent, text);
+        const url = await threadUrl(root);
+        res.json({
+            ok: true, url
+        })
     }catch(e){
         console.error(e);
         res.status(500).send("implodes and dies");
