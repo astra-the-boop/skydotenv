@@ -12,7 +12,7 @@ const agent = new BskyAgent({
 
 function splitTheCunt(input){
     const segmenter = new Intl.Segmenter("en",{granularity:"grapheme"});
-    const graphemes = [...segmenter.segment(input).map(s=>s.segment)];
+    const graphemes = [...segmenter.segment(input)].map(s=>s.segment);
 
     const chunks = [];
     for(let i =0; i<graphemes.length; i+=300){
