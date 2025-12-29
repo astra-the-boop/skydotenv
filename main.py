@@ -9,9 +9,14 @@ from tqdm import tqdm
 def searchFiles(root, target):
     matches = []
 
-    for dirpath, dirnames, filenames in tqdm(os.walk(root), desc="Scanning files...", unit=""):
-        if target in filenames:
-            matches.append(os.path.join(dirpath, target))
+    with tqdm(desc="Scanning files", unit="") as thingy:
+        for dirpath, dirnames, filenames in os.walk(root):
+            thingy.set_postfix_str(dirpath, refresh=False)
+
+            if target in filenames:
+                matches.append(os.path.join(dirpath, target))
+
+            thingy.update(1)
 
     return matches
 
